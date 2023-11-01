@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de Gráficas</title>
+  <link rel="icon" href="img/logo eetp.jpg" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #222;
+      color: #fff;
+      padding: 20px;
+      margin: 0;
+      overflow: hidden;
+      position: relative; /* Agregamos esto para posicionar el botón */
+    }
+
+    h1 {
+      color: #4caf50;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 5px;
+      margin-bottom: 10px;
+      overflow: auto;
+      max-height: 150px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .grafica-container {
+      height: 400px;
+      overflow-x: auto;
+      background-color: #333;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Estilos para el botón de regreso a la página principal */
+    .regresar {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón para regresar a la página principal -->
+  <a class="regresar" href="principal.html">
+    <button>Regresar</button>
+  </a>
+
+  <h1>Generador de Gráficas</h1>
+
+  <label for="valores-x">Valores X:</label>
+  <br>
+  <input type="text" id="valores-x" placeholder="Separados por comas">
+
+  <br>
+
+  <label for="valores-y">Valores Y:</label>
+  <br>
+  <input type="text" id="valores-y" placeholder="Separados por comas">
+
+  <br>
+
+  <button onclick="generarGrafica()">Generar Gráfica</button>
+
+  <div class="grafica-container">
+    <canvas id="grafica"></canvas>
+  </div>
+
+  <!-- Footer empresarial -->
+  <div class="footer">
+    
+    © 2023 Sistema de monitoreo y análisis - Proyecto Integrador EETP 477. Todos los derechos reservados.
+  </div>
+
+  <script>
+    var myChart;
+
+    function generarGrafica() {
+      if (myChart) {
+        myChart.destroy();
+      }
+
+      var valoresX = document.getElementById('valores-x').value;
+      var valoresY = document.getElementById('valores-y').value;
+
+      var arrayX = valoresX.split(',').map(Number);
+      var arrayY = valoresY.split(',').map(Number);
+
+      var canvas = document.getElementById('grafica');
+      var ctx = canvas.getContext('2d');
+
+      myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: arrayX,
+          datasets: [{
+            label: 'Valores Y',
+            data: arrayY,
+            backgroundColor: 'rgba(76, 175, 80, 0.5)',
+            borderColor: 'rgba(76, 175, 80, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#777'
+              }
+            },
+            x: {
+              grid: {
+                color: '#777'
+              }
+            }
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
